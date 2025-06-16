@@ -1,161 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Stach Store</title>
-  <style>
-    body {
-      margin: 0;
-      background: black;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      color: white;
-    }
 
-    .background {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: url('https://i.imgur.com/ZrLjw1Z_d.webp') no-repeat center center;
-      background-size: cover;
-      animation: pan 30s infinite alternate ease-in-out;
-      z-index: -1;
-    }
-
-    @keyframes pan {
-      0% { background-position: center; }
-      100% { background-position: center top; }
-    }
-
-    .container {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      animation: fadeIn 2s ease;
-      z-index: 1;
-      position: relative;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .logo {
-      width: 220px;
-      height: 220px;
-      transform-style: preserve-3d;
-      transition: transform 0.1s linear;
-      filter: drop-shadow(0 0 20px white);
-    }
-
-    .enter-button {
-      margin-top: 20px;
-      font-size: 40px;
-      color: white;
-      background: none;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      letter-spacing: 2px;
-    }
-
-    .enter-button:hover {
-      transform: scale(1.1);
-      text-shadow: 0 0 10px white;
-    }
-
-    .socials {
-      position: absolute;
-      bottom: 30px;
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      width: 100%;
-    }
-
-    .socials img {
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      filter: brightness(0) invert(1);
-      transition: transform 0.3s ease;
-    }
-
-    .socials img:hover {
-      transform: scale(1.2);
-      filter: brightness(0) invert(1) drop-shadow(0 0 5px white);
-    }
-  </style>
-</head>
-<body>
-  <div class="background"></div>
-
-  <div class="container">
-    <img src="glow_stach_logo.png" alt="Logo" class="logo" id="logo3D" />
-    <button class="enter-button" onclick="enterStore()">ENTER</button>
-  </div>
-
-  <div class="socials">
-    <a href="https://instagram.com/sa._r4k" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" />
-    </a>
-    <a href="https://tiktok.com/@s___aif8" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" />
-    </a>
-    <a href="https://wa.me/0918446430" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
-    </a>
-  </div>
-
-  <script>
-    const logo = document.getElementById('logo3D');
-    let isDragging = false;
-    let startX = 0;
-
-    logo.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      startX = e.clientX;
-    });
-
-    document.addEventListener('mouseup', () => {
-      isDragging = false;
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (isDragging) {
-        const rotateY = (e.clientX - startX) * 0.5;
-        logo.style.transform = rotateY(${rotateY}deg);
-      }
-    });
-
-    logo.addEventListener('touchstart', (e) => {
-      isDragging = true;
-      startX = e.touches[0].clientX;
-    });
-
-    logo.addEventListener('touchend', () => {
-      isDragging = false;
-    });
-
-    logo.addEventListener('touchmove', (e) => {
-      if (isDragging) {
-        const rotateY = (e.touches[0].clientX - startX) * 0.5;
-        logo.style.transform = rotateY(${rotateY}deg);
-      }
-    });
-
-    function enterStore() {
-      window.location.href = "store.html";
-    }
-  </script>
-</body>
-</html>
 لقد أرسلت
 <!DOCTYPE html>
 <html lang="en">
@@ -166,25 +9,10 @@
   <style>
     body {
       margin: 0;
-      background: black;
+      background: white;
       overflow: hidden;
       font-family: Arial, sans-serif;
-      color: white;
-    }
-
-    .background {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: url('https://i.imgur.com/ZrLjw1Z_d.webp') no-repeat center center;
-      background-size: cover;
-      animation: pan 30s infinite alternate ease-in-out;
-      z-index: -1;
-    }
-
-    @keyframes pan {
-      0% { background-position: center; }
-      100% { background-position: center top; }
+      color: black;
     }
 
     .container {
@@ -194,69 +22,59 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      animation: fadeIn 2s ease;
-      z-index: 1;
       position: relative;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .logo {
+      width: 260px;
+      height: 260px;
+      margin-bottom: 50px;
+      animation: spin 30s linear infinite;
+      transform-style: preserve-3d;
     }
 
-    .logo {
-      width: 220px;
-      height: 220px;
-      transform-style: preserve-3d;
-      transition: transform 0.1s linear;
-      filter: drop-shadow(0 0 20px white);
+    @keyframes spin {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
     }
 
     .enter-button {
-      margin-top: 20px;
-      font-size: 40px;
-      color: white;
+      font-size: 72px;
+      font-weight: 900;
+      color: black;
       background: none;
       border: none;
-      font-weight: bold;
       cursor: pointer;
-      transition: transform 0.3s ease;
-      letter-spacing: 2px;
-    }
-
-    .enter-button:hover {
-      transform: scale(1.1);
-      text-shadow: 0 0 10px white;
+      line-height: 1;
+      transform: translateY(-40px);
     }
 
     .socials {
       position: absolute;
-      bottom: 30px;
+      bottom: 40px;
       display: flex;
-      gap: 20px;
+      gap: 30px;
       justify-content: center;
       width: 100%;
     }
 
     .socials img {
-      width: 30px;
-      height: 30px;
+      width: 36px;
+      height: 36px;
+      filter: brightness(0);
       cursor: pointer;
-      filter: brightness(0) invert(1);
       transition: transform 0.3s ease;
     }
 
     .socials img:hover {
       transform: scale(1.2);
-      filter: brightness(0) invert(1) drop-shadow(0 0 5px white);
     }
   </style>
 </head>
 <body>
-  <div class="background"></div>
-
   <div class="container">
     <img src="glow_stach_logo.png" alt="Logo" class="logo" id="logo3D" />
+
     <button class="enter-button" onclick="enterStore()">ENTER</button>
   </div>
 
@@ -275,34 +93,30 @@
   <script>
     const logo = document.getElementById('logo3D');
     let isDragging = false;
-    let startX = 0;
+    let startX;
 
-    logo.addEventListener('mousedown', (e) => {
+    logo.addEventListener('mousedown', e => {
       isDragging = true;
       startX = e.clientX;
     });
 
-    document.addEventListener('mouseup', () => {
-      isDragging = false;
-    });
+    document.addEventListener('mouseup', () => isDragging = false);
 
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener('mousemove', e => {
       if (isDragging) {
         const rotateY = (e.clientX - startX) * 0.5;
         logo.style.transform = rotateY(${rotateY}deg);
       }
     });
 
-    logo.addEventListener('touchstart', (e) => {
+    logo.addEventListener('touchstart', e => {
       isDragging = true;
       startX = e.touches[0].clientX;
     });
 
-    logo.addEventListener('touchend', () => {
-      isDragging = false;
-    });
+    logo.addEventListener('touchend', () => isDragging = false);
 
-    logo.addEventListener('touchmove', (e) => {
+    logo.addEventListener('touchmove', e => {
       if (isDragging) {
         const rotateY = (e.touches[0].clientX - startX) * 0.5;
         logo.style.transform = rotateY(${rotateY}deg);
