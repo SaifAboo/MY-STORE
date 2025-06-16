@@ -1,3 +1,5 @@
+
+لقد أرسلت
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +19,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      background: url('https://i.imgur.com/ZrLjw1Z_d.webp') no-repeat center center;
+      background: url('https://i.imgur.com/ZrLjw1Z.webp') no-repeat center center;
       background-size: cover;
       animation: pan 30s infinite alternate ease-in-out;
       z-index: -1;
@@ -36,6 +38,8 @@
       justify-content: center;
       height: 100vh;
       animation: fadeIn 2s ease;
+      position: relative;
+      z-index: 1;
     }
 
     @keyframes fadeIn {
@@ -48,6 +52,8 @@
       height: 220px;
       animation: spin 30s linear infinite;
       transform-style: preserve-3d;
+      filter: drop-shadow(0 0 20px white);
+      transition: transform 0.2s ease;
     }
 
     @keyframes spin {
@@ -56,19 +62,20 @@
     }
 
     .enter-button {
-      margin-top: 30px;
-      font-size: 32px;
+      margin-top: 50px;
+      font-size: 40px;
       color: white;
       background: none;
       border: none;
-      font-weight: bold;
+      font-weight: 900;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, text-shadow 0.3s ease;
+      letter-spacing: 2px;
     }
 
     .enter-button:hover {
       transform: scale(1.1);
-      text-shadow: 0 0 10px white;
+      text-shadow: 0 0 15px white;
     }
 
     .socials {
@@ -83,13 +90,14 @@
     .socials img {
       width: 30px;
       height: 30px;
+      filter: brightness(0) invert(1);
       cursor: pointer;
       transition: transform 0.3s ease;
     }
 
     .socials img:hover {
       transform: scale(1.2);
-      filter: drop-shadow(0 0 5px white);
+      filter: drop-shadow(0 0 8px white);
     }
   </style>
 </head>
@@ -97,8 +105,7 @@
   <div class="background"></div>
 
   <div class="container">
-    <img src="glow-stach-logo.png" alt="Logo" class="logo" id="logo3D" />
-
+    <img src="glow_stach_logo.png" alt="Logo" class="logo" id="logo3D" />
     <button class="enter-button" onclick="enterStore()">ENTER</button>
   </div>
 
@@ -115,10 +122,15 @@
   </div>
 
   <script>
-    // يسمح بتحريك اللوقو ثلاثي الأبعاد
     const logo = document.getElementById('logo3D');
     let isDragging = false;
-    let startX;
+    let startX = 0;
+    let currentRotation = 0;
+
+    function rotateLogo(deltaX) {
+      currentRotation += deltaX * 0.3;
+      logo.style.transform = rotateY(${currentRotation}deg);
+    }
 
     logo.addEventListener('mousedown', e => {
       isDragging = true;
@@ -129,8 +141,9 @@
 
     document.addEventListener('mousemove', e => {
       if (isDragging) {
-        const rotateY = (e.clientX - startX) * 0.5;
-        logo.style.transform = rotateY(${rotateY}deg);
+        const deltaX = e.clientX - startX;
+        rotateLogo(deltaX);
+        startX = e.clientX;
       }
     });
 
@@ -143,13 +156,13 @@
 
     logo.addEventListener('touchmove', e => {
       if (isDragging) {
-        const rotateY = (e.touches[0].clientX - startX) * 0.5;
-        logo.style.transform = rotateY(${rotateY}deg);
+        const deltaX = e.touches[0].clientX - startX;
+        rotateLogo(deltaX);
+        startX = e.touches[0].clientX;
       }
     });
 
     function enterStore() {
-      // هنا يذهب للصفحة التالية بعد الدخول
       window.location.href = "store.html";
     }
   </script>
