@@ -1,126 +1,159 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>متجري الإلكتروني</title>
+  <title>Stach Store</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      height: 100vh;
-      background-color: #fff;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      margin: 0;
+      background: white;
       overflow: hidden;
-      position: relative;
+      font-family: Arial, sans-serif;
     }
 
-    .logo-container {
+    canvas {
+      display: block;
       position: absolute;
-      top: 10%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      perspective: 1000px;
+      top: 0;
+      left: 0;
     }
 
-    .logo {
-      width: 200px;
-      height: auto;
-      transform-style: preserve-3d;
-      transition: transform 0.1s ease-out;
-      animation: spin 15s linear infinite;
-      filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.8));
-    }
-
-    @keyframes spin {
-      0% { transform: rotateY(0deg); }
-      100% { transform: rotateY(360deg); }
-    }
-
-    .enter-text {
+    .enter-button {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 65%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       font-size: 60px;
       font-weight: 900;
-      color: #000;
+      color: black;
+      background: none;
+      border: none;
       cursor: pointer;
       transition: transform 0.3s ease, color 0.3s ease;
+      z-index: 10;
     }
 
-    .enter-text:hover {
-      transform: translateY(-50%) scale(1.1);
-      color: #333;
+    .enter-button:hover {
+      transform: scale(1.1) translate(-50%, -50%);
     }
 
-    .social-icons {
+    .socials {
       position: absolute;
-      bottom: 40px;
+      bottom: 30px;
       display: flex;
-      gap: 20px;
+      gap: 25px;
+      justify-content: center;
+      width: 100%;
+      z-index: 10;
     }
 
-    .social-icons a {
-      font-size: 24px;
-      color: #000;
-      text-decoration: none;
+    .socials img {
+      width: 35px;
+      height: 35px;
+      filter: brightness(0); /* أسود فقط */
+      cursor: pointer;
       transition: transform 0.3s ease;
     }
 
-    .social-icons a:hover {
+    .socials img:hover {
       transform: scale(1.2);
-    }
-
-    @media (max-width: 600px) {
-      .enter-text {
-        font-size: 40px;
-      }
-      .logo {
-        width: 140px;
-      }
     }
   </style>
 </head>
 <body>
-  <!-- شعار المتجر -->
-  <div class="logo-container">
-    <img src="glow_stach_logo.png" alt="Stach STORE Logo" class="logo">
+  <button class="enter-button" onclick="enterStore()">ENTER</button>
+
+  <div class="socials">
+    <a href="https://instagram.com/sa._r4k" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" />
+    </a>
+    <a href="https://tiktok.com/@s___aif8" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" />
+    </a>
+    <a href="https://wa.me/0918446430" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
+    </a>
   </div>
 
-  <!-- زر ENTER -->
-  <div class="enter-text" onclick="alert('سندخل المتجر هنا لاحقًا')">ENTER</div>
-
-  <!-- أيقونات التواصل -->
-  <div class="social-icons">
-    <a href="https://instagram.com/sa._r4k" target="_blank">Instagram</a>
-    <a href="https://www.tiktok.com/@s___aif8" target="_blank">TikTok</a>
-    <a href="https://wa.me/0918446430" target="_blank">WhatsApp</a>
-  </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
   <script>
-    const logo = document.querySelector('.logo');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-    document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * -30;
-      logo.style.transform = rotateY(${x}deg) rotateX(${y}deg);
+    const textureLoader = new THREE.TextureLoader();
+    const logoTexture = textureLoader.load('glow_stach_logo.png');
+
+    const geometry = new THREE.BoxGeometry(4, 4, 1); // سمك 1 = تقريبًا 15px
+    const materials = [
+      new THREE.MeshBasicMaterial({ map: logoTexture }), // Front
+      new THREE.MeshBasicMaterial({ color: 0x000000 }),   // Back
+      new THREE.MeshBasicMaterial({ color: 0x000000 }),   // Top
+      new THREE.MeshBasicMaterial({ color: 0x000000 }),   // Bottom
+      new THREE.MeshBasicMaterial({ color: 0x000000 }),   // Right
+      new THREE.MeshBasicMaterial({ color: 0x000000 })    // Left
+    ];
+
+    const cube = new THREE.Mesh(geometry, materials);
+    scene.add(cube);
+
+    camera.position.z = 10;
+
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (!isDragging) {
+        cube.rotation.y += 0.003;
+      }
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    document.addEventListener('touchmove', (e) => {
-      const touch = e.touches[0];
-      const x = (touch.clientX / window.innerWidth - 0.5) * 30;
-      const y = (touch.clientY / window.innerHeight - 0.5) * -30;
-      logo.style.transform = rotateY(${x}deg) rotateX(${y}deg);
+    // تفاعل الماوس
+    renderer.domElement.addEventListener('mousedown', e => {
+      isDragging = true;
+      previousMousePosition = { x: e.clientX, y: e.clientY };
     });
+
+    renderer.domElement.addEventListener('mouseup', () => isDragging = false);
+
+    renderer.domElement.addEventListener('mousemove', e => {
+      if (isDragging) {
+        const deltaX = e.clientX - previousMousePosition.x;
+        cube.rotation.y += deltaX * 0.01;
+        previousMousePosition = { x: e.clientX, y: e.clientY };
+      }
+    });
+
+    // تفاعل اللمس
+    renderer.domElement.addEventListener('touchstart', e => {
+      isDragging = true;
+      previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    });
+
+    renderer.domElement.addEventListener('touchend', () => isDragging = false);
+
+    renderer.domElement.addEventListener('touchmove', e => {
+      if (isDragging) {
+        const deltaX = e.touches[0].clientX - previousMousePosition.x;
+        cube.rotation.y += deltaX * 0.01;
+        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    });
+
+    function enterStore() {
+      window.location.href = 'store.html';
+    }
   </script>
 </body>
 </html>
