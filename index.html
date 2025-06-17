@@ -19,16 +19,15 @@
       justify-content: center;
       height: 100vh;
       text-align: center;
+      position: relative;
     }
 
     .logo {
-      width: 250px;
-      height: 250px;
-      object-fit: contain;
+      width: 300px;
+      height: 300px;
       animation: spin 25s linear infinite;
-      filter: drop-shadow(0 0 15px rgba(0,0,0,0.4));
       transform-style: preserve-3d;
-      margin-bottom: 20px;
+      margin-bottom: 40px;
     }
 
     @keyframes spin {
@@ -37,19 +36,19 @@
     }
 
     .enter-button {
-      font-size: 42px;
+      font-size: 64px;
       font-weight: 900;
       color: black;
       background: none;
       border: none;
       cursor: pointer;
       transition: transform 0.3s ease, color 0.3s ease;
+      line-height: 1;
     }
 
     .enter-button:hover {
       transform: scale(1.1);
       color: #000000;
-      text-shadow: 0 0 5px rgba(0,0,0,0.5);
     }
 
     .socials {
@@ -64,7 +63,7 @@
     .socials img {
       width: 35px;
       height: 35px;
-      filter: brightness(0);
+      filter: brightness(0); /* يجعلهم أسود فقط */
       cursor: pointer;
       transition: transform 0.3s ease;
     }
