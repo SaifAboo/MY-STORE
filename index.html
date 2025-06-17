@@ -18,17 +18,17 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      position: relative;
-      z-index: 1;
+      text-align: center;
     }
 
     .logo {
       width: 250px;
       height: 250px;
-      margin-bottom: 20px;
-      animation: spin 20s linear infinite;
+      object-fit: contain;
+      animation: spin 25s linear infinite;
+      filter: drop-shadow(0 0 15px rgba(0,0,0,0.4));
       transform-style: preserve-3d;
-      filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
+      margin-bottom: 20px;
     }
 
     @keyframes spin {
@@ -37,19 +37,19 @@
     }
 
     .enter-button {
-      font-size: 48px;
+      font-size: 42px;
+      font-weight: 900;
       color: black;
       background: none;
       border: none;
-      font-weight: 900;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease, color 0.3s ease;
     }
 
     .enter-button:hover {
       transform: scale(1.1);
-      color: #000;
-      text-shadow: 0 0 10px #000;
+      color: #000000;
+      text-shadow: 0 0 5px rgba(0,0,0,0.5);
     }
 
     .socials {
@@ -64,19 +64,13 @@
     .socials img {
       width: 35px;
       height: 35px;
-      cursor: pointer;
       filter: brightness(0);
+      cursor: pointer;
       transition: transform 0.3s ease;
     }
 
     .socials img:hover {
       transform: scale(1.2);
-      filter: brightness(0) drop-shadow(0 0 5px black);
-    }
-
-    @media (max-width: 600px) {
-      .logo { width: 180px; height: 180px; }
-      .enter-button { font-size: 36px; }
     }
   </style>
 </head>
@@ -88,7 +82,7 @@
 
   <div class="socials">
     <a href="https://instagram.com/sa._r4k" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" />
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" />
     </a>
     <a href="https://tiktok.com/@s___aif8" target="_blank">
       <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" />
@@ -99,7 +93,6 @@
   </div>
 
   <script>
-    // حركة اللوقو بالماوس أو بالإصبع
     const logo = document.getElementById('logo3D');
     let isDragging = false;
     let startX;
