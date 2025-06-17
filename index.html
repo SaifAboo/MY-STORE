@@ -1,132 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Stach Store</title>
+  <title>متجري الإلكتروني</title>
   <style>
-    body {
+    * {
       margin: 0;
-      background: white;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .container {
+    body {
+      height: 100vh;
+      background-color: #fff;
+      font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      text-align: center;
+      overflow: hidden;
       position: relative;
     }
 
+    .logo-container {
+      position: absolute;
+      top: 10%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+
     .logo {
-      width: 300px;
-      height: 300px;
-      animation: spin 25s linear infinite;
+      width: 200px;
+      height: auto;
       transform-style: preserve-3d;
-      margin-bottom: 40px;
+      transition: transform 0.1s ease-out;
+      animation: spin 15s linear infinite;
+      filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.8));
     }
 
     @keyframes spin {
-      from { transform: rotateY(0deg); }
-      to { transform: rotateY(360deg); }
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(360deg); }
     }
 
-    .enter-button {
-      font-size: 64px;
+    .enter-text {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 60px;
       font-weight: 900;
-      color: black;
-      background: none;
-      border: none;
+      color: #000;
       cursor: pointer;
       transition: transform 0.3s ease, color 0.3s ease;
-      line-height: 1;
     }
 
-    .enter-button:hover {
-      transform: scale(1.1);
-      color: #000000;
+    .enter-text:hover {
+      transform: translateY(-50%) scale(1.1);
+      color: #333;
     }
 
-    .socials {
+    .social-icons {
       position: absolute;
-      bottom: 30px;
+      bottom: 40px;
       display: flex;
-      gap: 25px;
-      justify-content: center;
-      width: 100%;
+      gap: 20px;
     }
 
-    .socials img {
-      width: 35px;
-      height: 35px;
-      filter: brightness(0); /* يجعلهم أسود فقط */
-      cursor: pointer;
+    .social-icons a {
+      font-size: 24px;
+      color: #000;
+      text-decoration: none;
       transition: transform 0.3s ease;
     }
 
-    .socials img:hover {
+    .social-icons a:hover {
       transform: scale(1.2);
+    }
+
+    @media (max-width: 600px) {
+      .enter-text {
+        font-size: 40px;
+      }
+      .logo {
+        width: 140px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <img src="glow_stach_logo.png" alt="Logo" class="logo" id="logo3D" />
-    <button class="enter-button" onclick="enterStore()">ENTER</button>
+  <!-- شعار المتجر -->
+  <div class="logo-container">
+    <img src="glow_stach_logo.png" alt="Stach STORE Logo" class="logo">
   </div>
 
-  <div class="socials">
-    <a href="https://instagram.com/sa._r4k" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" />
-    </a>
-    <a href="https://tiktok.com/@s___aif8" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" />
-    </a>
-    <a href="https://wa.me/0918446430" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
-    </a>
+  <!-- زر ENTER -->
+  <div class="enter-text" onclick="alert('سندخل المتجر هنا لاحقًا')">ENTER</div>
+
+  <!-- أيقونات التواصل -->
+  <div class="social-icons">
+    <a href="https://instagram.com/sa._r4k" target="_blank">Instagram</a>
+    <a href="https://www.tiktok.com/@s___aif8" target="_blank">TikTok</a>
+    <a href="https://wa.me/0918446430" target="_blank">WhatsApp</a>
   </div>
 
   <script>
-    const logo = document.getElementById('logo3D');
-    let isDragging = false;
-    let startX;
+    const logo = document.querySelector('.logo');
 
-    logo.addEventListener('mousedown', e => {
-      isDragging = true;
-      startX = e.clientX;
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 30;
+      const y = (e.clientY / window.innerHeight - 0.5) * -30;
+      logo.style.transform = rotateY(${x}deg) rotateX(${y}deg);
     });
 
-    document.addEventListener('mouseup', () => isDragging = false);
-
-    document.addEventListener('mousemove', e => {
-      if (isDragging) {
-        const rotateY = (e.clientX - startX) * 0.5;
-        logo.style.transform = rotateY(${rotateY}deg);
-      }
+    document.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      const x = (touch.clientX / window.innerWidth - 0.5) * 30;
+      const y = (touch.clientY / window.innerHeight - 0.5) * -30;
+      logo.style.transform = rotateY(${x}deg) rotateX(${y}deg);
     });
-
-    logo.addEventListener('touchstart', e => {
-      isDragging = true;
-      startX = e.touches[0].clientX;
-    });
-
-    logo.addEventListener('touchend', () => isDragging = false);
-
-    logo.addEventListener('touchmove', e => {
-      if (isDragging) {
-        const rotateY = (e.touches[0].clientX - startX) * 0.5;
-        logo.style.transform = rotateY(${rotateY}deg);
-      }
-    });
-
-    function enterStore() {
-      window.location.href = "store.html";
-    }
   </script>
 </body>
 </html>
